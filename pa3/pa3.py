@@ -12,7 +12,7 @@ def affine_encrypt(text, a, b):
     """
 
   # FIXME: raise an error if the gcd(a, 26) is not 1
-
+  if 
   cipher = ""
   for letter in text:
     if letter.isalpha():
@@ -173,3 +173,89 @@ def rsa_decrypt(cipher, p, q, e):
     text += 'None'
 
   return text
+
+"""---- Code imported form pa2 ----"""
+def bezout_coeffs(a, b):
+  """
+      computes the Bezout coefficients of two given positive integers
+      :param a: int type; positive integer
+      :param b: int type; positive integer
+      :returns: dict type; a dictionary with parameters a and b as keys,
+                and their corresponding Bezout coefficients as values.
+      :raises: ValueError if a < 0 or b < 0
+      """
+  if a < 0 or b < 0:
+    raise ValueError(
+      f"bezout_coeffs(a, b) does not support negative arguments.")
+  s0 = 1
+  t0 = 0
+  s1 = -1 * (b // a)
+  t1 = 1
+
+  temp = b
+  bk = a
+  ak = temp % a
+
+  while ak != 0:
+    temp_s = s1
+    temp_t = t1
+
+    # FIXME: Update s1 according to the formula for sk
+    s1 = s0 - s1 * (bk // ak)
+
+    # FIXME: Update t1 according to the formula for tk
+    t1 = t0 - t1 * (bk // ak)
+
+    s0 = temp_s
+    t0 = temp_t
+    temp = bk
+
+    # FIXME: Update bk and ak
+    bk = ak
+    ak = temp % ak
+
+  # FIXME: Replace each string with the correct coefficients of a and b
+  return {a: s0, b: t0}
+
+def gcd(a, b):
+  
+  """
+    computes the greatest common divisor of two given integers
+    :param a: int type;
+    :param b: int type;
+    :returns: int type; the gcd of a and b
+    """
+  A = abs(a)
+  B = abs(b)
+  if A == B:
+    return A  # FIXME: replace this pass with the correct return value
+  bez = bezout_coeffs(A, B)
+  return  (A * bez[A] + B * bez[B] )# FIXME: replace this pass with the correct return value
+
+def mod_inv(a, m):
+  """
+    computes the inverse of a given integer a under a given modulo m
+    :param a: int type; the integer of interest
+    :param m: int type; the modulo
+    :returns: int type; the integer in range [0, m) that is the inverse of a under modulo m
+    :raises: ValueError if m < 0 or if a and m are not relatively prime
+    """
+  if m < 0:
+    raise ValueError(f"mod_inv(a, m) does not support negative modulo m = {m}")
+  g = gcd(a, m)
+  if g != 1:
+    raise ValueError(
+      f"mod_inv(a, m) does not support integers that are not relatively prime.\nGCD of {a} and {m} is {g}."
+    )
+  A = a
+  while A < 0:
+
+    A += m #"""FIXME: replace this string so that by the end of the loop, A is in range [0, m) and is equivalent to a under modulo m"""
+
+  inverse = bezout_coeffs(A, m)[A] #"""FIXME: replace this string with the inverse of a under modulo m"""
+
+  while inverse < 0:
+
+    inverse += m #"""FIXME: replace this string so that by the end of the loop, the inverse is in range [0, m)"""
+
+  return inverse
