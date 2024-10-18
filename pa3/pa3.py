@@ -1,3 +1,4 @@
+from util import *
 """ ----------------- PROBLEM 1 ----------------- """
 
 
@@ -12,28 +13,30 @@ def affine_encrypt(text, a, b):
     """
 
   # FIXME: raise an error if the gcd(a, 26) is not 1
-  if 
+  if gcd(a, 26) != 1:
+    raise ValueError("The given key is invalid.")
+  
   cipher = ""
   for letter in text:
     if letter.isalpha():
       # FIXME: Use util.py to initialize 'num' to be
       # the integer corresponding to the current letter
-      num = None
+      num = letters2digits(letter)
 
       # FIXME: Encrypt the current 'num' using the
       # affine transformation with key (a, b).
       # Store the result in cipher_digits.
-      cipher_digits = 'None'
+      cipher_digits = str(((a * num) + b) % 26)
 
       if len(cipher_digits) == 1:
         # FIXME: If the cipherdigit is 0 - 9,
         # prepend the string with a 0
         # to make it a two-digit number
-        cipher_digits = None
+        cipher_digits = "0"+ cipher_digits
 
       # FIXME: Use util.py to append to the cipher the ENCRYPTED letter
       # corresponding to the current cipher digits
-      cipher += 'None'
+      cipher += cipher_digits
 
   return cipher
 
