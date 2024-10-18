@@ -1,9 +1,9 @@
 from pa3 import *
 
 def main():
-    text = "REPEAT"
-    n = 2537
-    e = 13
+    text = "STOP POLLUTION"
+    n = 3589
+    e = 17
     cipher = affine_encrypt(text, 1, 5)
     print(f"Test: {text} Cipher = {cipher}")
     de_cipher = affine_decrypt(cipher, 1, 5)
