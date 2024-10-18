@@ -26,7 +26,8 @@ def affine_encrypt(text, a, b):
       # FIXME: Encrypt the current 'num' using the
       # affine transformation with key (a, b).
       # Store the result in cipher_digits.
-      cipher_digits = str(((a * num) + b) % 26)
+      
+      cipher_digits = str((a* int(num) + b) % 26)
 
       if len(cipher_digits) == 1:
         # FIXME: If the cipherdigit is 0 - 9,
@@ -36,7 +37,7 @@ def affine_encrypt(text, a, b):
 
       # FIXME: Use util.py to append to the cipher the ENCRYPTED letter
       # corresponding to the current cipher digits
-      cipher += cipher_digits
+      cipher += digits2letters(cipher_digits)
 
   return cipher
 
@@ -52,8 +53,10 @@ def affine_decrypt(ciphertext, a, b):
     :param: b - int type; shift value
     :return: str type; the decrypted message as a string of uppercase letters
     """
-
-  a_inv = 0  # FIXME: complete this line so that a_inv holds the inverse of a under modulo 26
+  if gcd(a, 26) != 1:
+    raise ValueError("The given key is invalid.")
+  
+  a_inv = mod_inv(a, 26)  # FIXME: complete this line so that a_inv holds the inverse of a under modulo 26
 
   text = ""
   for letter in ciphertext:
@@ -62,22 +65,22 @@ def affine_decrypt(ciphertext, a, b):
 
       # FIXME: Use util.py to find the integer `num` that corresponds
       # to the given letter
-      num = None
+      num = letters2digits(letter)
 
       # FIXME: Decrypt the integer that corresponds to the current
       # encrypted letter using the decryption function for an affine
       # transformation with key (a, b) so that letter_digits holds
       # the decrypted number as a string of two digits
-      letter_digits = 'None'
+      letter_digits = str((a_inv* int(num) - b) % 26)
 
       if len(letter_digits) == 1:
         # FIXME: If the letter number is between 0 - 9, inclusive,
         # prepend the string with a 0
-        letter_digits = None
+        letter_digits = "0" + letter_digits
 
       # FIXME: Use util.py to append to the text the decrypted
       # letter corresponding to the current letter digits
-      text += 'None'
+      text += digits2letters(letter_digits)
   return text
 
 
