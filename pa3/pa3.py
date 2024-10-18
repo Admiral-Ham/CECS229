@@ -100,14 +100,19 @@ def rsa_encrypt(plaintext, n, e):
 
   # FIXME: Use util.py to initialize 'digits' as a string of
   # the two-digit integers that correspond to the letters of 'text'
-  digits = 'None'
+  digits = letters2digits(plaintext)
 
   # FIXME: Use util.py to initialize 'l' with the length of each RSA block
+  str_25 = "25"
   l = 0
+  while int(str_25) < n:
+    l += 2
+    str_25 += str_25
 
   # FIXME: Use a loop to pad 'digits' with enough 23's (i.e. X's)
   # so that it can be broken up into blocks of length l
-
+  while len(digits) % l != 0:
+    digits += "23"
   # creating a list of RSA blocks
   blocks = [digits[i:i + l] for i in range(0, len(digits), l)]
 
@@ -115,7 +120,7 @@ def rsa_encrypt(plaintext, n, e):
   for b in blocks:
     # FIXME: Initialize 'encrypted_block' so that it contains
     # the encryption of block 'b' as a string
-    encrypted_block = 'None'
+    encrypted_block = str((int(b) ** e) % n)
 
     if len(encrypted_block) < l:
       # FIXME: If the encrypted block contains less digits
@@ -124,10 +129,10 @@ def rsa_encrypt(plaintext, n, e):
       # remains the same, but the new block size is l,
       # e.g. if l = 4 and encrypted block is '451' then prepend
       # one 0 to obtain '0451'
-      encrypted_block = None
+      encrypted_block = "0" + b
 
     # FIXME: Append the encrypted block to the cipher
-    cipher += 'None'
+    cipher += encrypted_block
   return cipher
 
 
