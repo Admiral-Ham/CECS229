@@ -148,22 +148,22 @@ def rsa_decrypt(cipher, p, q, e):
 
   # FIXME: Use util.py to initialize `l` with the size of
   # each RSA block
-  l = 0
+  l = blocksize(n)
 
   # FIXME: Use a Python list comprehension to break the ciphertext
   # into blocks of equal length 'l'. Initialize 'blocks' so that it
   # contains these blocks as elements
-  blocks = []
+  blocks = [ciphertext[i:i + l] for i in range(0, len(ciphertext), l)]
 
   text = ""  # initializing the variable that will hold the decrypted text
 
   # FIXME: Compute the inverse of e
-  e_inv = None
+  e_inv = mod_inv(e,((p - 1) * (q - 1)))
 
   for b in blocks:
     # FIXME: Use the RSA decryption function to decrypt
     # the current block
-    decrypted_block = 'None'
+    decrypted_block = str((int(b) ** e_inv) % n)
 
     if len(decrypted_block) < l:
       # FIXME: If the decrypted block contains less digits
@@ -172,11 +172,11 @@ def rsa_decrypt(cipher, p, q, e):
       # remains the same, but the new block size is l,
       # e.g. if l = 4 and decrypted block is '19' then prepend
       # two 0's to obtain '0019'
-      decrypted_block = None
+      decrypted_block = "0" *(l - len(decrypted_block)) + decrypted_block
 
     # FIXME: Use util.py to append to text the decrypted block
     # transformed into letters
-    text += 'None'
+    text += digits2letters(decrypted_block)
 
   return text
 

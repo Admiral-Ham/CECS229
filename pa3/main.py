@@ -11,4 +11,9 @@ def main():
     rsa_en = rsa_encrypt(text, n, e)
     print(f"\nText: {text}  RSA Encryption: {rsa_en}")
 
+    e_text = "03412005"
+    p, q, e = 43, 59, 23
+    de_cipher = rsa_decrypt(e_text, p, q, e)
+    print(f"Text: {e_text}  Decrypted Text: {de_cipher}")
+
 main()
