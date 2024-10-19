@@ -71,7 +71,7 @@ def affine_decrypt(ciphertext, a, b):
       # encrypted letter using the decryption function for an affine
       # transformation with key (a, b) so that letter_digits holds
       # the decrypted number as a string of two digits
-      letter_digits = str((a_inv* int(num) - b) % 26)
+      letter_digits = str((a_inv* (int(num) - b)) % 26)
 
       if len(letter_digits) == 1:
         # FIXME: If the letter number is between 0 - 9, inclusive,
