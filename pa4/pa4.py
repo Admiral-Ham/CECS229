@@ -46,9 +46,12 @@ def rotate(S, tau):
                 If zero, no rotation.
     :returns: set type; a set consisting of points in S rotated by tau radians
     """
+    rotated_set = set()
+    for x in S:
+       rotated_set.add(x * tau)
     # FIXME: Implement this function. 
     # FIXME: Return correct output
-    return None
+    return rotated_set
 
 
 """ ----------------- PROBLEM 4 ----------------- """
