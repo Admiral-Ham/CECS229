@@ -8,9 +8,12 @@ def translate(S, z0):
   :param z0: complex type; a complex number
   :return: set type; a set consisting of points in S translated by z0
   """
+  set_t = set()
+  for x in S:
+     set_t.add(x + z0)
   # FIXME: Implement this function
   # FIXME: Return correct output
-  return None
+  return set_t
 
 
 """ ----------------- PROBLEM 2 ----------------- """
@@ -22,6 +25,7 @@ def scale(S, k):
   :return: set type; a set consisting of points in S scaled by k
   :raise: raises ValueError if k <= 0       
   """
+  
   # FIXME: Implement this function.
   # FIXME: Return correct output
   return None
@@ -58,9 +62,12 @@ class Vec:
       Overloads the built-in function abs(v)
       :returns: float type; the Euclidean norm of vector v
       """
+      mag = 0
+      for i in self.elements:
+         mag += i ** 2
       # FIXME: Implement this method
       # FIXME: Return correct output
-      return None   
+      return math.sqrt(mag)
 
   def __add__(self, other):
       """
@@ -68,9 +75,14 @@ class Vec:
       :raises: ValueError if vectors are not same length 
       :returns: Vec type; a Vec object that is the sum vector of this Vec and 'other' Vec
       """
+      if len(self.elements) != len(other.elements):
+          raise ValueError ("Vectors are not the same size.")
+      sum = []
+      for i in range(len(self.elements)):
+          sum.append(self.elements[i] + other.elements[i])
       # FIXME: Finish the implementation
       # FIXME: Return correct output
-      return None   
+      return Vec(sum) 
 
   def __sub__(self, other):
       """
@@ -78,9 +90,14 @@ class Vec:
       :raises: ValueError if vectors are not same length 
       :returns: Vec type; a Vec object that is the difference vector of this Vec and 'other' Vec
       """
+      if len(self.elements) != len(other.elements):
+          raise ValueError ("Vectors are not the same size.")
+      sub = []
+      for i in range(len(self.elements)):
+          sub.append(self.elements[i] - other.elements[i])
       # FIXME: Finish the implementation
       # FIXME: Return correct output
-      return None
+      return Vec(sub)
 
 
 
@@ -94,14 +111,19 @@ class Vec:
 
       """
       if type(other) == Vec: #define dot product
+          if len(self.elements) != len(other.elements):
+            raise ValueError ("Vectors are not the same size.")
+          dot_product = 0
+          for i in range(len(self.elements)):
+             dot_product += self.elements[i] * other.elements[i]
           # FIXME: Complete the implementation
           # FIXME: Return the correct output
-          return None
+          return dot_product
 
       elif type(other) == float or type(other) == int: #scalar-vector multiplication
-          # FIXME: Complete the implementation
-          # FIXME: Return the correct output
-          return None
+        for i in range(len(self.elements)):
+            self.elements[i] = self.elements[i] * other
+        return self
 
 
   def __rmul__(self, other):
@@ -110,9 +132,11 @@ class Vec:
           - float * Vec; returns Vec object
           - int * Vec; returns Vec object
       """
+      for i in range(len(self.elements)):
+        self.elements[i] = self.elements[i] * other
       # FIXME: Complete the implementation
       # FIXME: Return the correct output
-      return None
+      return self
 
 
 
