@@ -48,7 +48,7 @@ def rotate(S, tau):
     """
     rotated_set = set()
     for x in S:
-       rotated_set.add(x * tau)
+       rotated_set.add(x + tau)
     # FIXME: Implement this function. 
     # FIXME: Return correct output
     return rotated_set
