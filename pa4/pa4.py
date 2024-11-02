@@ -27,9 +27,12 @@ def scale(S, k):
   """
   if k <= 0:
      raise ValueError("K is negative")
+  scale_set = set()
+  for x in S:
+     scale_set.add(x * k)
   # FIXME: Implement this function.
   # FIXME: Return correct output
-  return None
+  return scale_set
 
 
 """ ----------------- PROBLEM 3 ----------------- """
