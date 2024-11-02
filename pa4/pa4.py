@@ -46,12 +46,14 @@ def rotate(S, tau):
                 If zero, no rotation.
     :returns: set type; a set consisting of points in S rotated by tau radians
     """
-    rotated_set = set()
+    r_set = set()
+    c_tau = math.cos(tau)
+    s_tau = math.sin(tau)
     for x in S:
-       rotated_set.add(x + tau)
+        r_set.add(complex(x.real * c_tau - x.imag * s_tau, x.real * s_tau + x.imag * c_tau))
     # FIXME: Implement this function. 
     # FIXME: Return correct output
-    return rotated_set
+    return r_set
 
 
 """ ----------------- PROBLEM 4 ----------------- """
@@ -143,7 +145,6 @@ class Vec:
       list = []
       for i in range(len(self.elements)):
         list.append(self.elements[i] * other)
-        return Vec(list)
       # FIXME: Complete the implementation
       # FIXME: Return the correct output
       return Vec(list)
