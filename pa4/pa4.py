@@ -25,7 +25,8 @@ def scale(S, k):
   :return: set type; a set consisting of points in S scaled by k
   :raise: raises ValueError if k <= 0       
   """
-  
+  if k <= 0:
+     raise ValueError("K is negative")
   # FIXME: Implement this function.
   # FIXME: Return correct output
   return None
@@ -121,9 +122,10 @@ class Vec:
           return dot_product
 
       elif type(other) == float or type(other) == int: #scalar-vector multiplication
+        list = []
         for i in range(len(self.elements)):
-            self.elements[i] = self.elements[i] * other
-        return self
+            list.append(self.elements[i] * other)
+        return Vec(list)
 
 
   def __rmul__(self, other):
@@ -132,11 +134,13 @@ class Vec:
           - float * Vec; returns Vec object
           - int * Vec; returns Vec object
       """
+      list = []
       for i in range(len(self.elements)):
-        self.elements[i] = self.elements[i] * other
+        list.append(self.elements[i] * other)
+        return Vec(list)
       # FIXME: Complete the implementation
       # FIXME: Return the correct output
-      return self
+      return Vec(list)
 
 
 
