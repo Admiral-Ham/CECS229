@@ -1,5 +1,5 @@
 from Vec import Vec
- 
+import math
 """-------------------- PROBLEM 1 --------------------"""
 class Matrix:
  
@@ -176,6 +176,7 @@ class Matrix:
         :raises: TypeError if other is not of Matrix type
         :return: Matrix type; the Matrix object resulting from the Matrix + Matrix operation
         """
+        val_list = []
         if type(other) == float or type(other) == int:
             temp_matrix = Matrix(self.get_rows())
             for i in range(1 ,len(self.rows) + 1):
@@ -188,24 +189,28 @@ class Matrix:
             if len(self.cols) != len(other.rows):
                 raise ValueError("Matrix obejects have the mismatching dimensions.")
             
-            val_list = []
-            dot_product = 0
-            for i in range(1 ,len(self.rows) + 1):
-                val_list.append([])
-                for j in range(1, len(self.rows[0]) + 1):
-                    dot_product += self.get_entry(i, j) * other.get_entry(i, j)
-                val_list[i - 1].append(dot_product)
+            
+            for i in range(len(self.rows)):
+              listc = self.get_row(i+1)
+              listb = []
+              for j in range(len(other.cols)):
+                temp0 = other.get_col(j+1)
+                temp = [listc[k]*temp0[k] for k in range(len(listc))]
+                sums = sum(temp)
+                listb.append(sums)
+              val_list.append(listb)
             return Matrix(val_list)
  
         elif type(other) == Vec:
             if len(self.cols) != len(other):
               raise  ValueError("Matrix or Vector have the mismatching dimensions.")
-            temp_matrix = Matrix(self.get_rows())
-            for i in range(1 ,len(other.elements) + 1):
-              for j in range(1, len(self.rows[0]) + 1):
-                val = other.elements[i - 1] * self.get_entry(i, j)
-                temp_matrix.set_entry(i, j, val)
-            return temp_matrix
+            product = 0
+            for i in range(len(self.rows)):
+                product = 0
+                for j in range(len(self.cols)):
+                    product += self.get_entry(i+1, j+1) * other[j]
+                val_list.append(product)
+            return(Vec(val_list))
         else:
             raise TypeError(f"Matrix * {type(other)} is not supported.")
         return
@@ -290,4 +295,10 @@ def rotate_2Dvec(v: Vec, tau: float):
     :param tau: float type; the radians to rotate by
     :return: Vec type; the rotated vector
     """
-    pass  # FIXME: REPLACE WITH IMPLEMENTATION
+    if len(v) != 2:
+        raise ValueError("Vector must be 2D.")
+
+    x, y = v[0], v[1]
+    new_x = x * math.cos(tau) - y * math.sin(tau)
+    new_y = x * math.sin(tau) + y * math.cos(tau)
+    return Vec([new_x, new_y])
